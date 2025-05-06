@@ -15,11 +15,31 @@ const ACTIVITIES = [
   { id: 'rest', label: 'Rest', icon: '🛋️' }
 ];
 
+const WEATHER_OPTIONS = [
+  { value: 'sunny', emoji: '☀️', label: 'Sunny' },
+  { value: 'cloudy', emoji: '☁️', label: 'Cloudy' },
+  { value: 'rainy', emoji: '🌧️', label: 'Rainy' },
+  { value: 'snowy', emoji: '🌨️', label: 'Snowy' },
+  { value: 'stormy', emoji: '⛈️', label: 'Stormy' }
+];
+
+const PHYSICAL_SYMPTOMS = [
+  { id: 'headache', label: 'Headache', icon: '🤕' },
+  { id: 'fatigue', label: 'Fatigue', icon: '😴' },
+  { id: 'nausea', label: 'Nausea', icon: '🤢' },
+  { id: 'pain', label: 'Pain', icon: '😣' },
+  { id: 'healthy', label: 'Healthy', icon: '💪' }
+];
+
 const MoodForm = () => {
   const [mood, setMood] = useState('happy')
   const [sleepHours, setSleepHours] = useState(8)
   const [activities, setActivities] = useState([])
   const [stressLevel, setStressLevel] = useState(5)
+  const [energyLevel, setEnergyLevel] = useState(5)
+  const [notes, setNotes] = useState('')
+  const [weather, setWeather] = useState('sunny')
+  const [physicalHealth, setPhysicalHealth] = useState([])
 
   const { addEntry } = useMood()
   const navigate = useNavigate()
@@ -40,6 +60,10 @@ const MoodForm = () => {
       sleepHours,
       activities,
       stressLevel,
+      energyLevel,
+      notes,
+      weather,
+      physicalHealth,
     }
     entry.moodScore = analyzeMood(entry)
     addEntry(entry)
@@ -146,6 +170,91 @@ const MoodForm = () => {
           <span>Low Stress</span>
           <span>High Stress</span>
         </div>
+      </div>
+
+      {/* Energy Level */}
+      <div className="mb-6 sm:mb-8">
+        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+          Energy Level
+        </label>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={energyLevel}
+          onChange={(e) => setEnergyLevel(Number(e.target.value))}
+          className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
+        />
+        <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
+          <span>Low Energy</span>
+          <span>High Energy</span>
+        </div>
+      </div>
+
+      {/* Weather */}
+      <div className="mb-6 sm:mb-8">
+        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+          Weather Today
+        </label>
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+          {WEATHER_OPTIONS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setWeather(option.value)}
+              className={`p-2 sm:p-3 rounded-xl transition-all ${
+                weather === option.value
+                  ? 'bg-indigo-100 dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              <div className="text-xl sm:text-2xl mb-1">{option.emoji}</div>
+              <div className="text-[10px] sm:text-xs dark:text-gray-300">{option.label}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Physical Health */}
+      <div className="mb-6 sm:mb-8">
+        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+          Physical Health
+        </label>
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+          {PHYSICAL_SYMPTOMS.map((symptom) => (
+            <button
+              key={symptom.id}
+              type="button"
+              onClick={() => setPhysicalHealth(prev =>
+                prev.includes(symptom.id)
+                  ? prev.filter(id => id !== symptom.id)
+                  : [...prev, symptom.id]
+              )}
+              className={`p-2 sm:p-3 rounded-xl transition-all ${
+                physicalHealth.includes(symptom.id)
+                  ? 'bg-indigo-100 dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              <div className="text-xl sm:text-2xl mb-1">{symptom.icon}</div>
+              <div className="text-[10px] sm:text-xs dark:text-gray-300">{symptom.label}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Notes/Journal */}
+      <div className="mb-6 sm:mb-8">
+        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+          Notes (Optional)
+        </label>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+          placeholder="Add any thoughts or reflections..."
+          rows="3"
+        />
       </div>
 
       <button

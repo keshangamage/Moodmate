@@ -6,6 +6,7 @@ ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, T
 
 const MoodChart = ({ data }) => {
   const [timeRange, setTimeRange] = useState('week') // week, month, all
+  const [selectedMetric, setSelectedMetric] = useState('all') // all, mood, stress, energy
 
   const filterData = () => {
     if (timeRange === 'all') return data;
@@ -18,6 +19,82 @@ const MoodChart = ({ data }) => {
   }
 
   const filteredData = filterData();
+
+  const calculateStats = (data) => {
+    if (!data.length) return null;
+    
+    const moodScores = data.map(entry => entry.moodScore);
+    const stressScores = data.map(entry => entry.stressLevel);
+    const energyScores = data.map(entry => entry.energyLevel);
+    
+    return {
+      mood: {
+        average: (moodScores.reduce((a, b) => a + b, 0) / moodScores.length).toFixed(1),
+        highest: Math.max(...moodScores),
+        lowest: Math.min(...moodScores),
+        trend: moodScores[moodScores.length - 1] - moodScores[0]
+      },
+      stress: {
+        average: (stressScores.reduce((a, b) => a + b, 0) / stressScores.length).toFixed(1),
+        highest: Math.max(...stressScores),
+        lowest: Math.min(...stressScores),
+        trend: stressScores[stressScores.length - 1] - stressScores[0]
+      },
+      energy: {
+        average: (energyScores.reduce((a, b) => a + b, 0) / energyScores.length).toFixed(1),
+        highest: Math.max(...energyScores),
+        lowest: Math.min(...energyScores),
+        trend: energyScores[energyScores.length - 1] - energyScores[0]
+      }
+    };
+  };
+
+  const stats = calculateStats(filteredData);
+
+  const calculateActivityImpact = () => {
+    const impact = {};
+    filteredData.forEach(entry => {
+      entry.activities?.forEach(activity => {
+        if (!impact[activity]) {
+          impact[activity] = { total: 0, count: 0 };
+        }
+        impact[activity].total += entry.moodScore;
+        impact[activity].count += 1;
+      });
+    });
+
+    return Object.entries(impact)
+      .map(([activity, stats]) => ({
+        activity,
+        average: stats.total / stats.count,
+        count: stats.count
+      }))
+      .sort((a, b) => b.average - a.average);
+  };
+
+  const activityImpact = calculateActivityImpact();
+
+  const calculateWeatherImpact = () => {
+    const impact = {};
+    filteredData.forEach(entry => {
+      if (!entry.weather) return;
+      if (!impact[entry.weather]) {
+        impact[entry.weather] = { total: 0, count: 0 };
+      }
+      impact[entry.weather].total += entry.moodScore;
+      impact[entry.weather].count += 1;
+    });
+
+    return Object.entries(impact)
+      .map(([weather, stats]) => ({
+        weather,
+        average: stats.total / stats.count,
+        count: stats.count
+      }))
+      .sort((a, b) => b.average - a.average);
+  };
+
+  const weatherImpact = calculateWeatherImpact();
 
   const chartData = {
     labels: filteredData.map((entry) => {
@@ -40,6 +117,7 @@ const MoodChart = ({ data }) => {
         pointHoverBackgroundColor: '#4f46e5',
         pointHoverBorderColor: '#fff',
         pointHoverBorderWidth: 3,
+        hidden: selectedMetric !== 'all' && selectedMetric !== 'mood',
       },
       {
         label: 'Stress Level',
@@ -56,6 +134,24 @@ const MoodChart = ({ data }) => {
         pointHoverBackgroundColor: '#dc2626',
         pointHoverBorderColor: '#fff',
         pointHoverBorderWidth: 3,
+        hidden: selectedMetric !== 'all' && selectedMetric !== 'stress',
+      },
+      {
+        label: 'Energy Level',
+        data: filteredData.map((entry) => entry.energyLevel),
+        borderColor: '#f59e0b',
+        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: '#f59e0b',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#d97706',
+        pointHoverBorderColor: '#fff',
+        pointHoverBorderWidth: 3,
+        hidden: selectedMetric !== 'all' && selectedMetric !== 'energy',
       }
     ],
   }
@@ -101,6 +197,9 @@ const MoodChart = ({ data }) => {
             const lines = [];
             if (entry.sleepHours) lines.push(`Sleep: ${entry.sleepHours} hours`);
             if (entry.activities?.length) lines.push(`Activities: ${entry.activities.join(', ')}`);
+            if (entry.weather) lines.push(`Weather: ${entry.weather}`);
+            if (entry.physicalHealth?.length) lines.push(`Health: ${entry.physicalHealth.join(', ')}`);
+            if (entry.notes) lines.push(`Notes: ${entry.notes.substring(0, 50)}${entry.notes.length > 50 ? '...' : ''}`);
             return lines;
           },
         },
@@ -137,29 +236,22 @@ const MoodChart = ({ data }) => {
     },
   }
 
-  // Calculate activity correlations
-  const calculateActivityImpact = () => {
-    const impact = {};
-    filteredData.forEach(entry => {
-      entry.activities?.forEach(activity => {
-        if (!impact[activity]) {
-          impact[activity] = { total: 0, count: 0 };
-        }
-        impact[activity].total += entry.moodScore;
-        impact[activity].count += 1;
-      });
-    });
-
-    return Object.entries(impact)
-      .map(([activity, stats]) => ({
-        activity,
-        average: stats.total / stats.count,
-        count: stats.count
-      }))
-      .sort((a, b) => b.average - a.average);
-  };
-
-  const activityImpact = calculateActivityImpact();
+  const renderStatCard = (title, value, icon, trend = null) => (
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm">
+      <div className="flex items-center justify-between">
+        <span className="text-gray-500 dark:text-gray-400 text-sm">{title}</span>
+        {icon}
+      </div>
+      <div className="mt-2 flex items-baseline">
+        <span className="text-xl font-semibold text-gray-900 dark:text-white">{value}</span>
+        {trend !== null && (
+          <span className={`ml-2 text-sm ${trend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {trend >= 0 ? '↑' : '↓'} {Math.abs(trend).toFixed(1)}
+          </span>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div>
@@ -197,6 +289,48 @@ const MoodChart = ({ data }) => {
             All Time
           </button>
         </div>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setSelectedMetric('all')}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ${
+              selectedMetric === 'all'
+                ? 'bg-indigo-100 text-indigo-700'
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            All Metrics
+          </button>
+          <button
+            onClick={() => setSelectedMetric('mood')}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ${
+              selectedMetric === 'mood'
+                ? 'bg-indigo-100 text-indigo-700'
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            Mood
+          </button>
+          <button
+            onClick={() => setSelectedMetric('stress')}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ${
+              selectedMetric === 'stress'
+                ? 'bg-indigo-100 text-indigo-700'
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            Stress
+          </button>
+          <button
+            onClick={() => setSelectedMetric('energy')}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ${
+              selectedMetric === 'energy'
+                ? 'bg-indigo-100 text-indigo-700'
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            Energy
+          </button>
+        </div>
       </div>
 
       <div className="h-[180px] sm:h-[220px] mb-4 relative">
@@ -211,6 +345,44 @@ const MoodChart = ({ data }) => {
           </div>
         )}
       </div>
+
+      {stats && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+          {renderStatCard('Average Mood', stats.mood.average, '😊', stats.mood.trend)}
+          {renderStatCard('Average Stress', stats.stress.average, '😟', -stats.stress.trend)}
+          {renderStatCard('Average Energy', stats.energy.average, '⚡', stats.energy.trend)}
+        </div>
+      )}
+
+      {weatherImpact.length > 0 && (
+        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
+            Weather Impact on Mood
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {weatherImpact.map(({ weather, average, count }) => (
+              <div key={weather} className="bg-gray-50 dark:bg-gray-700 p-3 rounded-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-2xl">
+                    {weather === 'sunny' ? '☀️' :
+                     weather === 'cloudy' ? '☁️' :
+                     weather === 'rainy' ? '🌧️' :
+                     weather === 'snowy' ? '🌨️' :
+                     weather === 'stormy' ? '⛈️' : '🌤️'}
+                  </span>
+                  <span className="text-sm text-gray-500">{count} days</span>
+                </div>
+                <div className="space-y-1">
+                  <div className="font-medium capitalize">{weather}</div>
+                  <div className="text-sm text-gray-500">
+                    Average mood: {average.toFixed(1)}/10
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {activityImpact.length > 0 && (
         <div className="pt-2">

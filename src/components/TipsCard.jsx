@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TipsCard = ({ mood, activities = [] }) => {
+const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth = [] }) => {
   const moodTips = {
     happy: {
       tips: [
@@ -72,6 +72,81 @@ const TipsCard = ({ mood, activities = [] }) => {
     ]
   }
 
+  const weatherTips = {
+    sunny: [
+      'Take advantage of the sunshine with outdoor activities',
+      'Get some natural vitamin D with a short walk',
+      'Consider having lunch outside'
+    ],
+    cloudy: [
+      'Indoor activities can be just as energizing',
+      'Use this calm weather for a peaceful walk',
+      'Practice indoor exercises or stretching'
+    ],
+    rainy: [
+      'Create a cozy indoor environment',
+      'Use the rain sounds for meditation',
+      'Catch up on indoor hobbies or reading'
+    ],
+    snowy: [
+      'Stay warm and maintain your routine indoors',
+      'Try winter sports if conditions permit',
+      'Use this time for creative indoor activities'
+    ],
+    stormy: [
+      'Focus on calming indoor activities',
+      'Practice relaxation techniques during the storm',
+      'Use this time for self-reflection or journaling'
+    ]
+  }
+
+  const energyTips = {
+    low: [
+      'Take short, frequent breaks',
+      'Try light stretching exercises',
+      'Focus on proper hydration',
+      'Consider a power nap (15-20 minutes)'
+    ],
+    medium: [
+      'Maintain your current energy with regular movement',
+      'Balance activity with rest periods',
+      'Stay consistent with your routine'
+    ],
+    high: [
+      'Channel your energy into productive activities',
+      'Try more challenging exercises',
+      'Use this boost for tasks requiring focus'
+    ]
+  }
+
+  const healthTips = {
+    headache: [
+      'Take regular screen breaks',
+      'Stay hydrated and consider rest',
+      'Practice neck and shoulder stretches'
+    ],
+    fatigue: [
+      'Listen to your body and rest when needed',
+      'Maintain a consistent sleep schedule',
+      'Consider light exercise to boost energy'
+    ],
+    nausea: [
+      'Stay hydrated with small sips of water',
+      'Try ginger tea or mint',
+      'Rest in a well-ventilated space'
+    ],
+    pain: [
+      'Practice gentle stretching if appropriate',
+      'Consider relaxation techniques',
+      'Apply hot or cold compress as needed'
+    ],
+    healthy: [
+      'Maintain your healthy habits',
+      'Stay active and keep moving',
+      'Focus on prevention and self-care'
+    ]
+  }
+
   const getMissingSuggestions = () => {
     const recommendedActivities = ['exercise', 'meditation', 'socializing', 'nature'];
     const missing = recommendedActivities.filter(act => !activities.includes(act));
@@ -81,7 +156,15 @@ const TipsCard = ({ mood, activities = [] }) => {
     }));
   }
 
+  const getEnergyLevel = () => {
+    if (energyLevel <= 3) return 'low';
+    if (energyLevel <= 7) return 'medium';
+    return 'high';
+  }
+
   const currentMood = moodTips[mood] || moodTips.neutral;
+  const currentWeather = weatherTips[weather] || [];
+  const currentEnergyTips = energyTips[getEnergyLevel()] || [];
   const missingActivities = getMissingSuggestions();
 
   return (
@@ -109,7 +192,73 @@ const TipsCard = ({ mood, activities = [] }) => {
         </div>
       </div>
 
-      {/* Activity-based suggestions */}
+      {/* Weather-based tips */}
+      {weather && (
+        <div className="space-y-4 border-t border-white/20 pt-6">
+          <h4 className="font-semibold text-lg">Weather Tips</h4>
+          <div className="grid gap-3">
+            {currentWeather.map((tip, index) => (
+              <div key={index} className="bg-white/10 p-4 rounded-xl">
+                <div className="font-medium mb-2 flex items-center">
+                  <span className="text-2xl mr-2">
+                    {weather === 'sunny' ? '☀️' :
+                     weather === 'cloudy' ? '☁️' :
+                     weather === 'rainy' ? '🌧️' :
+                     weather === 'snowy' ? '🌨️' :
+                     weather === 'stormy' ? '⛈️' : '🌤️'}
+                  </span>
+                </div>
+                <p className="text-white/90">{tip}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Energy level tips */}
+      {energyLevel && (
+        <div className="space-y-4 border-t border-white/20 pt-6">
+          <h4 className="font-semibold text-lg">Energy Management</h4>
+          <div className="grid gap-3">
+            {currentEnergyTips.map((tip, index) => (
+              <div key={index} className="bg-white/10 p-4 rounded-xl">
+                <div className="font-medium mb-2 flex items-center">
+                  <span className="text-2xl mr-2">⚡</span>
+                </div>
+                <p className="text-white/90">{tip}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Health tips */}
+      {physicalHealth.length > 0 && (
+        <div className="space-y-4 border-t border-white/20 pt-6">
+          <h4 className="font-semibold text-lg">Health Tips</h4>
+          <div className="grid gap-3">
+            {physicalHealth.map(condition => (
+              healthTips[condition]?.map((tip, index) => (
+                <div key={`${condition}-${index}`} className="bg-white/10 p-4 rounded-xl">
+                  <div className="font-medium mb-2 flex items-center">
+                    <span className="text-2xl mr-2">
+                      {condition === 'headache' ? '🤕' :
+                       condition === 'fatigue' ? '😴' :
+                       condition === 'nausea' ? '🤢' :
+                       condition === 'pain' ? '😣' :
+                       condition === 'healthy' ? '💪' : '🏥'}
+                    </span>
+                    <span className="capitalize">{condition}</span>
+                  </div>
+                  <p className="text-white/90">{tip}</p>
+                </div>
+              ))
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Activity suggestions */}
       {activities.length > 0 && (
         <div className="space-y-4 border-t border-white/20 pt-6">
           <h4 className="font-semibold text-lg">Activity Follow-up</h4>

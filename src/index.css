@@ -78,6 +78,8 @@ body:not(.dark-mode) .navbar .mobile-menu {
   box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
   position: relative;
   overflow: hidden;
+  margin-left: 12px;
+  margin-right: 12px;
 }
 
 @media (min-width: 640px) {
