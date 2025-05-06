@@ -162,8 +162,8 @@ const MoodChart = ({ data }) => {
   const activityImpact = calculateActivityImpact();
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+    <div>
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
         <h3 className="text-base sm:text-lg font-semibold text-gray-700">Mood & Stress Trends</h3>
         <div className="flex space-x-2">
           <button
@@ -199,7 +199,7 @@ const MoodChart = ({ data }) => {
         </div>
       </div>
 
-      <div className="relative h-[250px] sm:h-[400px] w-full">
+      <div className="h-[180px] sm:h-[220px] mb-4 relative">
         <Line data={chartData} options={options} className="filter drop-shadow-lg" />
         {filteredData.length === 0 && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50 bg-opacity-90 rounded-lg">
@@ -213,11 +213,11 @@ const MoodChart = ({ data }) => {
       </div>
 
       {activityImpact.length > 0 && (
-        <div className="mt-6 sm:mt-8 mb-4">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3 sm:mb-4">Activity Impact on Mood</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="pt-2">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Activity Impact on Mood</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {activityImpact.map(({ activity, average, count }) => (
-              <div key={activity} className="bg-gray-50 dark:bg-gray-700 p-3 sm:p-4 rounded-xl flex items-center space-x-3 sm:space-x-4">
+              <div key={activity} className="bg-gray-50 dark:bg-gray-700 p-3 rounded-xl flex items-center space-x-3">
                 <div className="text-xl sm:text-2xl">
                   {activity === 'exercise' ? '🏃‍♂️' :
                    activity === 'meditation' ? '🧘‍♂️' :

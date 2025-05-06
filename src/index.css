@@ -218,10 +218,7 @@ input:focus, select:focus {
 
 
 @supports (padding: max(0px)) {
-  body {
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
+   
   
   .navbar {
     padding-top: max(1rem, env(safe-area-inset-top));
