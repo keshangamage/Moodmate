@@ -45,7 +45,7 @@ const Results = () => {
   }
 
   return (
-    <div className="min-h-screen p-3 sm:p-6">
+    <div className="mt-3 min-h-screen p-3 sm:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Today's Mood Card */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">

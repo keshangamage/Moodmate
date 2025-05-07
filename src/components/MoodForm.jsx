@@ -76,7 +76,7 @@ const MoodForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 sm:p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-xl w-full max-w-md mx-auto mt-4 sm:mt-5 transform transition-all duration-300 hover:shadow-2xl"
+      className="p-4 sm:p-9 bg-white dark:bg-gray-800 rounded-3xl shadow-xl w-full max-w-md mx-auto mt-4 sm:mt-5 transform transition-all duration-300 hover:shadow-2xl"
     >
       <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent dark:from-indigo-400 dark:to-indigo-200">
         How are you feeling today?
