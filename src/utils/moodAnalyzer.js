@@ -173,3 +173,161 @@ export const getInsights = (moodData) => {
 
   return insights;
 };
+
+export const getAdvancedInsights = (moodData) => {
+  if (!moodData.length) return [];
+
+  const insights = [];
+  const timeBasedPatterns = analyzeTimeBasedPatterns(moodData);
+  const activityImpact = analyzeActivityImpact(moodData);
+  const weekdayPatterns = analyzeWeekdayPatterns(moodData);
+  const seasonalPatterns = analyzeSeasonalPatterns(moodData);
+  
+  // Add time-based patterns
+  if (timeBasedPatterns.morningMood && timeBasedPatterns.eveningMood) {
+    insights.push({
+      type: 'time',
+      message: `Your mood tends to be ${timeBasedPatterns.morningMood > timeBasedPatterns.eveningMood ? 'higher' : 'lower'} in the morning compared to evening.`,
+      priority: 'medium',
+      category: 'pattern'
+    });
+  }
+
+  // Add weekday patterns
+  if (weekdayPatterns.bestDay) {
+    insights.push({
+      type: 'weekday',
+      message: `Your mood tends to be highest on ${weekdayPatterns.bestDay}s. Consider scheduling important activities on these days.`,
+      priority: 'medium',
+      category: 'suggestion'
+    });
+  }
+
+  // Add seasonal patterns
+  if (seasonalPatterns.seasonal) {
+    insights.push({
+      type: 'seasonal',
+      message: `Your mood shows seasonal patterns. You might benefit from light therapy or additional outdoor activities during ${seasonalPatterns.lowestSeason}.`,
+      priority: 'high',
+      category: 'health'
+    });
+  }
+
+  // Add activity combinations
+  activityImpact.bestCombinations.forEach(combo => {
+    insights.push({
+      type: 'activity',
+      message: `The combination of ${combo.activities.join(' and ')} seems particularly beneficial for your mood.`,
+      priority: 'medium',
+      category: 'suggestion'
+    });
+  });
+
+  return insights;
+};
+
+const analyzeTimeBasedPatterns = (moodData) => {
+  const morningEntries = moodData.filter(entry => {
+    const hour = new Date(entry.date).getHours();
+    return hour >= 5 && hour < 12;
+  });
+  
+  const eveningEntries = moodData.filter(entry => {
+    const hour = new Date(entry.date).getHours();
+    return hour >= 17 && hour < 24;
+  });
+
+  return {
+    morningMood: morningEntries.reduce((sum, entry) => sum + entry.moodScore, 0) / morningEntries.length,
+    eveningMood: eveningEntries.reduce((sum, entry) => sum + entry.moodScore, 0) / eveningEntries.length
+  };
+};
+
+const analyzeWeekdayPatterns = (moodData) => {
+  const weekdayScores = Array(7).fill(0).map(() => ({ total: 0, count: 0 }));
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  
+  moodData.forEach(entry => {
+    const day = new Date(entry.date).getDay();
+    weekdayScores[day].total += entry.moodScore;
+    weekdayScores[day].count++;
+  });
+
+  const averages = weekdayScores.map((scores, index) => ({
+    day: days[index],
+    average: scores.count > 0 ? scores.total / scores.count : 0
+  }));
+
+  const bestDay = averages.reduce((best, current) => 
+    current.average > best.average ? current : best
+  ).day;
+
+  return { bestDay };
+};
+
+const analyzeSeasonalPatterns = (moodData) => {
+  const seasonScores = {
+    winter: { total: 0, count: 0 },
+    spring: { total: 0, count: 0 },
+    summer: { total: 0, count: 0 },
+    fall: { total: 0, count: 0 }
+  };
+
+  moodData.forEach(entry => {
+    const month = new Date(entry.date).getMonth();
+    const season = 
+      month <= 1 || month === 11 ? 'winter' :
+      month <= 4 ? 'spring' :
+      month <= 7 ? 'summer' : 'fall';
+    
+    seasonScores[season].total += entry.moodScore;
+    seasonScores[season].count++;
+  });
+
+  const seasonAverages = Object.entries(seasonScores).map(([season, scores]) => ({
+    season,
+    average: scores.count > 0 ? scores.total / scores.count : 0
+  }));
+
+  const variance = Math.max(...seasonAverages.map(s => s.average)) - 
+                  Math.min(...seasonAverages.map(s => s.average));
+  
+  const lowestSeason = seasonAverages.reduce((lowest, current) => 
+    current.average < lowest.average ? current : lowest
+  ).season;
+
+  return {
+    seasonal: variance > 2,
+    lowestSeason
+  };
+};
+
+const analyzeActivityImpact = (moodData) => {
+  const combinations = new Map();
+
+  moodData.forEach(entry => {
+    if (!entry.activities || entry.activities.length < 2) return;
+
+    for (let i = 0; i < entry.activities.length - 1; i++) {
+      for (let j = i + 1; j < entry.activities.length; j++) {
+        const combo = [entry.activities[i], entry.activities[j]].sort().join(',');
+        if (!combinations.has(combo)) {
+          combinations.set(combo, { total: 0, count: 0 });
+        }
+        combinations.get(combo).total += entry.moodScore;
+        combinations.get(combo).count++;
+      }
+    }
+  });
+
+  const bestCombinations = Array.from(combinations.entries())
+    .map(([combo, scores]) => ({
+      activities: combo.split(','),
+      average: scores.count > 0 ? scores.total / scores.count : 0
+    }))
+    .filter(combo => combo.average > 7 && combo.count >= 3)
+    .sort((a, b) => b.average - a.average)
+    .slice(0, 3);
+
+  return { bestCombinations };
+};

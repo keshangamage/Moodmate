@@ -29,9 +29,9 @@ const Home = () => {
   const displayError = error || authError;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center mb-10">
+    <div className="min-h-screen flex flex-col items-center justify-center mb-10 ">
       <HeroSection />
-      <div className="card max-w-lg w-full">
+      <div className="card max-w-lg w-full mt-4">
         {loading ? (
           <div className="text-center p-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
@@ -60,6 +60,7 @@ const Home = () => {
           </>
         ) : (
           <>
+          
             <h1 className="text-2xl font-bold mb-4">Start Your Wellness Journey</h1>
             <p className="mb-6 text-gray-600 dark:text-gray-300">
               Track your moods, discover patterns, and improve your mental well-being with MoodMate.
@@ -69,7 +70,7 @@ const Home = () => {
                 {displayError}
               </div>
             )}
-
+ 
             <form onSubmit={handleSubmit} className="space-y-4 mb-6">
               {isSignUp && (
                 <div>
@@ -120,7 +121,7 @@ const Home = () => {
 
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-gray-00"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">Or</span>
@@ -139,6 +140,7 @@ const Home = () => {
               />
               Continue with Google
             </button>
+           
 
             <p className="text-center text-sm text-gray-600 dark:text-gray-400">
               {isSignUp ? 'Already have an account?' : "Don't have an account?"}
@@ -156,6 +158,7 @@ const Home = () => {
         )}
       </div>
     </div>
+    
   );
 };
 

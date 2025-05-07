@@ -243,7 +243,7 @@ const MoodForm = () => {
         </div>
       </div>
 
-      {/* Notes/Journal */}
+      {/* Notes*/}
       <div className="mb-6 sm:mb-8">
         <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
           Notes (Optional)

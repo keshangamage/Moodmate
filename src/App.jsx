@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { NotificationsProvider } from './context/NotificationsContext';
 import Home from './pages/Home'
 import CheckIn from './pages/CheckIn'
 import Results from './pages/Results'
@@ -58,7 +59,9 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <NotificationsProvider>
+        <AppContent />
+      </NotificationsProvider>
     </AuthProvider>
   );
 }

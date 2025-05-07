@@ -36,6 +36,25 @@ try {
 
 
 const auth = getAuth(app)
+
+
+const settings = {
+  popupRedirectResolver: {
+    _completeRedirectFn: async (auth, resolver, byPassAuthState) => {
+      try {
+        return await resolver._completeRedirectFn(auth, byPassAuthState);
+      } catch (error) {
+        if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/popup-blocked') {
+          console.warn('Popup was closed or blocked, attempting redirect flow...');
+          
+          return resolver._redirectFn(auth);
+        }
+        throw error;
+      }
+    }
+  }
+};
+
 setPersistence(auth, browserLocalPersistence)
   .catch((error) => {
     console.error('Auth persistence error:', error)

@@ -1,32 +1,30 @@
-import React, { useState } from 'react'
-import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, Filler } from 'chart.js'
+import React, { useState, useMemo } from 'react';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, Filler)
+ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, Filler);
 
 const MoodChart = ({ data }) => {
-  const [timeRange, setTimeRange] = useState('week') // week, month, all
-  const [selectedMetric, setSelectedMetric] = useState('all') // all, mood, stress, energy
+  const [timeRange, setTimeRange] = useState('week'); 
+  const [selectedMetric, setSelectedMetric] = useState('all'); 
 
   const filterData = () => {
     if (timeRange === 'all') return data;
-    
+
     const now = new Date();
     const daysToShow = timeRange === 'week' ? 7 : 30;
     const cutoff = new Date(now.setDate(now.getDate() - daysToShow));
-    
-    return data.filter(entry => new Date(entry.date) > cutoff);
-  }
 
-  const filteredData = filterData();
+    return data.filter(entry => new Date(entry.date) > cutoff);
+  };
 
   const calculateStats = (data) => {
     if (!data.length) return null;
-    
+
     const moodScores = data.map(entry => entry.moodScore);
     const stressScores = data.map(entry => entry.stressLevel);
     const energyScores = data.map(entry => entry.energyLevel);
-    
+
     return {
       mood: {
         average: (moodScores.reduce((a, b) => a + b, 0) / moodScores.length).toFixed(1),
@@ -49,8 +47,6 @@ const MoodChart = ({ data }) => {
     };
   };
 
-  const stats = calculateStats(filteredData);
-
   const calculateActivityImpact = () => {
     const impact = {};
     filteredData.forEach(entry => {
@@ -72,8 +68,6 @@ const MoodChart = ({ data }) => {
       .sort((a, b) => b.average - a.average);
   };
 
-  const activityImpact = calculateActivityImpact();
-
   const calculateWeatherImpact = () => {
     const impact = {};
     filteredData.forEach(entry => {
@@ -94,67 +88,124 @@ const MoodChart = ({ data }) => {
       .sort((a, b) => b.average - a.average);
   };
 
+  const calculateTrendLine = (data, metric) => {
+    const n = data.length;
+    if (n < 2) return null;
+
+    const xValues = Array.from({ length: n }, (_, i) => i);
+    const yValues = data.map(entry => entry[metric]);
+
+    const sumX = xValues.reduce((a, b) => a + b, 0);
+    const sumY = yValues.reduce((a, b) => a + b, 0);
+    const sumXY = xValues.reduce((sum, x, i) => sum + x * yValues[i], 0);
+    const sumXX = xValues.reduce((sum, x) => sum + x * x, 0);
+
+    const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    const intercept = (sumY - slope * sumX) / n;
+
+    return xValues.map(x => slope * x + intercept);
+  };
+
+  const filteredData = filterData();
+  const stats = calculateStats(filteredData);
+  const activityImpact = calculateActivityImpact();
   const weatherImpact = calculateWeatherImpact();
+  const moodTrendData = calculateTrendLine(filteredData, 'moodScore');
+  const stressTrendData = calculateTrendLine(filteredData, 'stressLevel');
+  const energyTrendData = calculateTrendLine(filteredData, 'energyLevel');
 
   const chartData = {
     labels: filteredData.map((entry) => {
-      const date = new Date(entry.date)
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      const date = new Date(entry.date);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     }),
     datasets: [
       {
         label: 'Mood Score',
         data: filteredData.map((entry) => entry.moodScore),
-        borderColor: '#6366f1',
+        borderColor: 'rgb(99, 102, 241)',
         backgroundColor: 'rgba(99, 102, 241, 0.1)',
         fill: true,
         tension: 0.4,
         pointRadius: 6,
         pointHoverRadius: 8,
-        pointBackgroundColor: '#6366f1',
+        pointBackgroundColor: 'rgb(99, 102, 241)',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
-        pointHoverBackgroundColor: '#4f46e5',
+        pointHoverBackgroundColor: 'rgb(79, 70, 229)',
         pointHoverBorderColor: '#fff',
         pointHoverBorderWidth: 3,
         hidden: selectedMetric !== 'all' && selectedMetric !== 'mood',
       },
       {
+        label: 'Mood Trend',
+        data: moodTrendData,
+        borderColor: 'rgb(99, 102, 241)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0,
+        hidden: selectedMetric !== 'all' && selectedMetric !== 'mood',
+      },
+      {
         label: 'Stress Level',
         data: filteredData.map((entry) => entry.stressLevel),
-        borderColor: '#ef4444',
+        borderColor: 'rgb(239, 68, 68)',
         backgroundColor: 'rgba(239, 68, 68, 0.1)',
         fill: true,
         tension: 0.4,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointBackgroundColor: '#ef4444',
+        pointBackgroundColor: 'rgb(239, 68, 68)',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
-        pointHoverBackgroundColor: '#dc2626',
+        pointHoverBackgroundColor: 'rgb(220, 38, 38)',
         pointHoverBorderColor: '#fff',
         pointHoverBorderWidth: 3,
         hidden: selectedMetric !== 'all' && selectedMetric !== 'stress',
       },
       {
+        label: 'Stress Trend',
+        data: stressTrendData,
+        borderColor: 'rgb(239, 68, 68)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0,
+        hidden: selectedMetric !== 'all' && selectedMetric !== 'stress',
+      },
+      {
         label: 'Energy Level',
         data: filteredData.map((entry) => entry.energyLevel),
-        borderColor: '#f59e0b',
+        borderColor: 'rgb(245, 158, 11)',
         backgroundColor: 'rgba(245, 158, 11, 0.1)',
         fill: true,
         tension: 0.4,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointBackgroundColor: '#f59e0b',
+        pointBackgroundColor: 'rgb(245, 158, 11)',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
-        pointHoverBackgroundColor: '#d97706',
+        pointHoverBackgroundColor: 'rgb(217, 119, 6)',
         pointHoverBorderColor: '#fff',
         pointHoverBorderWidth: 3,
         hidden: selectedMetric !== 'all' && selectedMetric !== 'energy',
-      }
-    ],
-  }
+      },
+      {
+        label: 'Energy Trend',
+        data: energyTrendData,
+        borderColor: 'rgb(245, 158, 11)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0,
+        hidden: selectedMetric !== 'all' && selectedMetric !== 'energy',
+      },
+    ].filter(dataset => dataset.data),
+  };
 
   const options = {
     responsive: true,
@@ -166,6 +217,10 @@ const MoodChart = ({ data }) => {
         labels: {
           usePointStyle: true,
           padding: 16,
+          filter: function(legendItem, data) {
+            
+            return !legendItem.text.includes('Trend');
+          },
           font: {
             size: window.innerWidth < 640 ? 10 : 12
           },
@@ -189,7 +244,7 @@ const MoodChart = ({ data }) => {
         },
         callbacks: {
           title: (context) => {
-            return `Date: ${context[0].label}`
+            return `Date: ${context[0].label}`;
           },
           afterBody: (context) => {
             const index = context[0].dataIndex;
@@ -234,7 +289,7 @@ const MoodChart = ({ data }) => {
         },
       },
     },
-  }
+  };
 
   const renderStatCard = (title, value, icon, trend = null) => (
     <div className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm">
@@ -334,7 +389,17 @@ const MoodChart = ({ data }) => {
       </div>
 
       <div className="h-[180px] sm:h-[220px] mb-4 relative">
-        <Line data={chartData} options={options} className="filter drop-shadow-lg" />
+        <Line 
+          data={chartData} 
+          options={options} 
+          className="filter drop-shadow-lg"
+          canvas={{
+            willReadFrequently: true,
+            style: {
+              backgroundColor: document.body.classList.contains('dark-mode') ? '#1f2937' : '#ffffff'
+            }
+          }} 
+        />
         {filteredData.length === 0 && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50 bg-opacity-90 rounded-lg">
             <div className="text-center">
@@ -420,7 +485,7 @@ const MoodChart = ({ data }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MoodChart
+export default MoodChart;
