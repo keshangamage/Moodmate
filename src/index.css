@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+
+@theme {
+  --color-bluegray: #2a3341;  
+}
+
 /*Navbar Styles */
 .navbar {
   background: var(--navbar-bg, linear-gradient(to right, rgb(76, 81, 191), rgb(99, 102, 241)));
@@ -80,13 +85,16 @@ body:not(.dark-mode) .navbar .mobile-menu {
   overflow: hidden;
   margin-left: 12px;
   margin-right: 12px;
+  margin-top: 35px;
+  
 }
 
 @media (min-width: 640px) {
   .hero {
     padding: 6rem 2rem;
     border-radius: 2rem;
-    margin: 2rem auto;
+    margin-left: 12px;
+    margin-right: 12px;
   }
 }
 
@@ -247,3 +255,5 @@ input:focus, select:focus {
     padding: 0.5rem;
   }
 }
+
+

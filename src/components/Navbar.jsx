@@ -66,7 +66,7 @@ const Navbar = () => {
     relative px-4 py-2 rounded-full transition-all duration-300
     ${isActiveRoute(path) 
       ? darkMode ? 'text-white bg-white bg-opacity-20' : 'text-indigo-700 bg-indigo-100' 
-      : darkMode ? 'text-white hover:bg-white hover:bg-opacity-10' : 'text-indigo-700 hover:bg-indigo-50'}
+      : darkMode ? 'text-white hover:bg-bluegray hover:bg-opacity-10' : 'text-indigo-700 hover:bg-indigo-50'}
   `;
 
   return (

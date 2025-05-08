@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center mb-10 ">
       <HeroSection />
-      <div className="card max-w-lg w-full mt-4">
+      <div className="card max-w-lg mt-4 ml-3 mr-3">
         {loading ? (
           <div className="text-center p-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
