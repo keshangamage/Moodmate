@@ -39,7 +39,7 @@ const Home = () => {
           </div>
         ) : user ? (
           <>
-            <h1 className="text-2xl font-bold mb-4">
+            <h1 className="text-2xl font-bold mb-4 text-white">
               Welcome back, {user.displayName}! 👋
             </h1>
             <p className="mb-6 text-gray-600 dark:text-gray-300">
@@ -52,7 +52,7 @@ const Home = () => {
                 </button>
               </Link>
               <Link to="/results">
-                <button className="bg-white text-indigo-600 border-2 border-indigo-600 py-3 px-6 rounded-full hover:bg-indigo-50 transform transition-all duration-300">
+                <button className="text-white border-2 border-indigo-600 py-3 px-6 rounded-full hover:bg-indigo-50 transform transition-all duration-300">
                   View Progress
                 </button>
               </Link>

@@ -426,7 +426,7 @@ const MoodChart = ({ data }) => {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {weatherImpact.map(({ weather, average, count }) => (
-              <div key={weather} className="bg-gray-50 dark:bg-gray-700 p-3 rounded-xl">
+              <div key={weather} className="text-white bg-gray-50 dark:bg-gray-700 p-3 rounded-xl">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-2xl">
                     {weather === 'sunny' ? '☀️' :
@@ -454,7 +454,7 @@ const MoodChart = ({ data }) => {
           <h3 className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Activity Impact on Mood</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {activityImpact.map(({ activity, average, count }) => (
-              <div key={activity} className="bg-gray-50 dark:bg-gray-700 p-3 rounded-xl flex items-center space-x-3">
+              <div key={activity} className="text-white bg-gray-50 dark:bg-gray-700 p-3 rounded-xl flex items-center space-x-3">
                 <div className="text-xl sm:text-2xl">
                   {activity === 'exercise' ? '🏃‍♂️' :
                    activity === 'meditation' ? '🧘‍♂️' :

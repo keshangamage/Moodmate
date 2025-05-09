@@ -13,7 +13,7 @@ const HeroSection = () => {
         </p>
         <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6 sm:mt-8">
           <Link to="/checkin">
-            <button className="w-full sm:w-auto bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transform transition">
+            <button className="w-full sm:w-auto bg-bluegray text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transform transition">
               Start Check-In
             </button>
           </Link>

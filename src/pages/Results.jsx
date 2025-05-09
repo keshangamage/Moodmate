@@ -309,7 +309,7 @@ const Results = () => {
           ref={chartRef}
           className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6"
           style={{
-            backgroundColor: document.body.classList.contains('dark-mode') ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',
+            backgroundColor: document.body.classList.contains('dark-mode') ? 'rgb(31, 41, 55)' : 'rgb(31, 41, 55), 255)',
             willChange: 'transform',
             transform: 'translateZ(0)'
           }}

@@ -18,19 +18,14 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-body:not(.dark-mode) .navbar {
-  --navbar-bg: linear-gradient(to right, rgb(248, 250, 252), rgb(241, 245, 249));
-  border-bottom: 1px solid rgb(229, 231, 235);
-}
 
-/* Mobile menu background colors */
 .navbar .mobile-menu {
   background: var(--navbar-bg, linear-gradient(to right, rgb(76, 81, 191), rgb(99, 102, 241)));
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 body:not(.dark-mode) .navbar .mobile-menu {
-  --navbar-bg: linear-gradient(to right, rgb(248, 250, 252), rgb(241, 245, 249));
+  --navbar-bg: linear-gradient(to right, rgb(76, 81, 191), rgb(99, 102, 241));
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -111,7 +106,7 @@ body:not(.dark-mode) .navbar .mobile-menu {
 
 /*Body Styles */
 body {
-  background: linear-gradient(135deg, rgb(243, 244, 246), rgb(229, 231, 235));
+  background: rgb(195 224 253);
   color: rgb(31, 41, 55);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   transition: background 0.3s, color 0.3s;
@@ -146,7 +141,7 @@ body.dark-mode input::placeholder {
 
 /* Card Styles */
 .card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(42,51,65);
   border-radius: 1rem;
   padding: 2.5rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);

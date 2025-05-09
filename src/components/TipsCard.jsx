@@ -172,17 +172,17 @@ const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth 
       <div className="flex items-center space-x-4">
         <span className="text-4xl">{currentMood.icon}</span>
         <div>
-          <h3 className="text-xl font-semibold">Personalized Tips</h3>
+          <h3 className="text-white text-xl font-semibold">Personalized Tips</h3>
           <p className="text-white/90 text-sm">Based on your current mood and activities</p>
         </div>
       </div>
       
       {/* Mood-based tips */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-lg">Mood Recommendations</h4>
+        <h4 className="text-white font-semibold text-lg">Mood Recommendations</h4>
         <div className="grid gap-3">
           {currentMood.tips.map((tip, index) => (
-            <div key={index} className="flex items-start space-x-3 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+            <div key={index} className="text-white flex items-start space-x-3 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
               <div className="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
                 {index + 1}
               </div>
@@ -195,7 +195,7 @@ const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth 
       {/* Weather-based tips */}
       {weather && (
         <div className="space-y-4 border-t border-white/20 pt-6">
-          <h4 className="font-semibold text-lg">Weather Tips</h4>
+          <h4 className="text-white font-semibold text-lg">Weather Tips</h4>
           <div className="grid gap-3">
             {currentWeather.map((tip, index) => (
               <div key={index} className="bg-white/10 p-4 rounded-xl">
@@ -218,7 +218,7 @@ const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth 
       {/* Energy level tips */}
       {energyLevel && (
         <div className="space-y-4 border-t border-white/20 pt-6">
-          <h4 className="font-semibold text-lg">Energy Management</h4>
+          <h4 className="text-white font-semibold text-lg">Energy Management</h4>
           <div className="grid gap-3">
             {currentEnergyTips.map((tip, index) => (
               <div key={index} className="bg-white/10 p-4 rounded-xl">
@@ -235,11 +235,11 @@ const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth 
       {/* Health tips */}
       {physicalHealth.length > 0 && (
         <div className="space-y-4 border-t border-white/20 pt-6">
-          <h4 className="font-semibold text-lg">Health Tips</h4>
+          <h4 className="text-white font-semibold text-lg">Health Tips</h4>
           <div className="grid gap-3">
             {physicalHealth.map(condition => (
               healthTips[condition]?.map((tip, index) => (
-                <div key={`${condition}-${index}`} className="bg-white/10 p-4 rounded-xl">
+                <div key={`${condition}-${index}`} className="text-white bg-white/10 p-4 rounded-xl">
                   <div className="font-medium mb-2 flex items-center">
                     <span className="text-2xl mr-2">
                       {condition === 'headache' ? '🤕' :
@@ -261,11 +261,11 @@ const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth 
       {/* Activity suggestions */}
       {activities.length > 0 && (
         <div className="space-y-4 border-t border-white/20 pt-6">
-          <h4 className="font-semibold text-lg">Activity Follow-up</h4>
+          <h4 className="text-white font-semibold text-lg">Activity Follow-up</h4>
           <div className="grid gap-3">
             {activities.map(activity => 
               activitySuggestions[activity] && (
-                <div key={activity} className="bg-white/10 p-4 rounded-xl">
+                <div key={activity} className="text-white bg-white/10 p-4 rounded-xl">
                   <div className="font-medium mb-2 flex items-center">
                     <span className="text-2xl mr-2">{
                       activity === 'exercise' ? '🏃‍♂️' :
@@ -289,10 +289,10 @@ const TipsCard = ({ mood, activities = [], weather, energyLevel, physicalHealth 
       {/* Suggestions for missing beneficial activities */}
       {missingActivities.length > 0 && (
         <div className="space-y-4 border-t border-white/20 pt-6">
-          <h4 className="font-semibold text-lg">Try These Activities</h4>
+          <h4 className="text-white font-semibold text-lg">Try These Activities</h4>
           <div className="grid gap-3">
             {missingActivities.map(({ activity, suggestion }) => (
-              <div key={activity} className="bg-white/10 p-4 rounded-xl flex items-center space-x-3">
+              <div key={activity} className="text-white bg-white/10 p-4 rounded-xl flex items-center space-x-3">
                 <span className="text-2xl">{
                   activity === 'exercise' ? '🏃‍♂️' :
                   activity === 'meditation' ? '🧘‍♂️' :

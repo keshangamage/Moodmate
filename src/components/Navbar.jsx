@@ -65,14 +65,14 @@ const Navbar = () => {
   const navLinkClass = (path) => `
     relative px-4 py-2 rounded-full transition-all duration-300
     ${isActiveRoute(path) 
-      ? darkMode ? 'text-white bg-white bg-opacity-20' : 'text-indigo-700 bg-indigo-100' 
-      : darkMode ? 'text-white hover:bg-bluegray hover:bg-opacity-10' : 'text-indigo-700 hover:bg-indigo-50'}
+      ? darkMode ? 'text-white bg-white bg-opacity-20' : 'text-white bg-bluegray' 
+      : darkMode ? 'text-white hover:bg-bluegray hover:bg-opacity-10' : 'text-white hover:bg-bluegray'}
   `;
 
   return (
     <>
       <nav className="navbar backdrop-blur-sm relative" ref={menuRef}>
-        <Link to="/" className={`flex items-center space-x-2 ${darkMode ? 'text-white' : 'text-indigo-700'}`}>
+        <Link to="/" className={`flex items-center space-x-2 ${darkMode ? 'text-white' : 'text-white'}`}>
           <span className="text-2xl">🌟</span>
           <h1 className="text-2xl font-bold">MoodMate</h1>
         </Link>
@@ -80,7 +80,7 @@ const Navbar = () => {
         {/* Hamburger Menu Button */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
+          className={`md:hidden p-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
           aria-label="Toggle menu"
         >
           <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -107,7 +107,7 @@ const Navbar = () => {
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               darkMode 
                 ? 'bg-white bg-opacity-10 text-white hover:bg-opacity-20' 
-                : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                : 'bg-bluegray text-white'
             }`}
           >
             {user ? 'Sign Out' : 'Sign In'}
@@ -115,7 +115,7 @@ const Navbar = () => {
           
           <button 
             onClick={toggleDarkMode}
-            className={`ml-4 p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-300 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
+            className={`ml-4 p-2 rounded-full hover:bg-bluegray hover:bg-opacity-10 transition-all duration-300 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
             aria-label="Toggle dark mode"
           >
             {darkMode ? (
@@ -136,8 +136,8 @@ const Navbar = () => {
           <Link 
             to="/" 
             onClick={() => handleMobileAction()}
-            className={`block px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-10 ${
-              darkMode ? 'text-white' : 'text-indigo-700'
+            className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${
+              darkMode ? 'text-white' : 'text-white'
             } ${isActiveRoute('/') ? 'active' : ''}`}
           >
             Home
@@ -147,8 +147,8 @@ const Navbar = () => {
               <Link 
                 to="/checkin" 
                 onClick={() => handleMobileAction()}
-                className={`block px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-10 ${
-                  darkMode ? 'text-white' : 'text-indigo-700'
+                className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${
+                  darkMode ? 'text-white' : 'text-white'
                 } ${isActiveRoute('/checkin') ? 'active' : ''}`}
               >
                 Check-In
@@ -156,8 +156,8 @@ const Navbar = () => {
               <Link 
                 to="/results" 
                 onClick={() => handleMobileAction()}
-                className={`block px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-10 ${
-                  darkMode ? 'text-white' : 'text-indigo-700'
+                className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${
+                  darkMode ? 'text-white' : 'text-white'
                 } ${isActiveRoute('/results') ? 'active' : ''}`}
               >
                 Results
@@ -166,13 +166,13 @@ const Navbar = () => {
           )}
           <button 
             onClick={() => handleMobileAction(user ? logout : login)}
-            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
+            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'}`}
           >
             {user ? 'Sign Out' : 'Sign In'}
           </button>
           <button 
             onClick={() => handleMobileAction(toggleDarkMode)}
-            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
+            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'}`}
           >
             {darkMode ? '🌞 Light Mode' : '🌙 Dark Mode'}
           </button>
