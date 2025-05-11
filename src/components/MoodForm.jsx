@@ -76,9 +76,9 @@ const MoodForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 sm:p-9 bg-white dark:bg-gray-800 rounded-3xl shadow-xl w-full max-w-md mx-auto mt-4 sm:mt-5 transform transition-all duration-300 hover:shadow-2xl"
+      className="p-4 sm:p-9 dark:bg-gray-800 rounded-3xl shadow-xl w-full max-w-md mx-auto mt-4 sm:mt-5 transform transition-all duration-300 hover:shadow-2xl"
     >
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent dark:from-indigo-400 dark:to-indigo-200">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent dark:from-indigo-400 ">
         How are you feeling today?
       </h2>
 
@@ -99,8 +99,8 @@ const MoodForm = () => {
               onClick={() => setMood(option.value)}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 mood === option.value
-                  ? 'bg-indigo-100 dark:bg-indigo-900 ring-2 ring-indigo-500'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  : 'dark:hover:bg-gray-700'
               }`}
             >
               <div className="text-xl sm:text-2xl mb-1">{option.emoji}</div>
@@ -122,7 +122,7 @@ const MoodForm = () => {
             max="24"
             value={sleepHours}
             onChange={(e) => setSleepHours(Number(e.target.value))}
-            className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             placeholder="Enter hours..."
           />
           <div className="absolute right-3 top-3 text-gray-400 dark:text-gray-500">hrs</div>
@@ -142,8 +142,8 @@ const MoodForm = () => {
               onClick={() => handleActivityToggle(activity.id)}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 activities.includes(activity.id)
-                  ? 'bg-indigo-100 dark:bg-indigo-900 ring-2 ring-indigo-500'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? ' dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  : ' dark:hover:bg-gray-700'
               }`}
             >
               <div className="text-xl sm:text-2xl mb-1">{activity.icon}</div>
@@ -164,7 +164,7 @@ const MoodForm = () => {
           max="10"
           value={stressLevel}
           onChange={(e) => setStressLevel(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
+          className="w-full h-2 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
         />
         <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
           <span>Low Stress</span>
@@ -183,7 +183,7 @@ const MoodForm = () => {
           max="10"
           value={energyLevel}
           onChange={(e) => setEnergyLevel(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
+          className="w-full h-2  dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
         />
         <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
           <span>Low Energy</span>
@@ -204,8 +204,8 @@ const MoodForm = () => {
               onClick={() => setWeather(option.value)}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 weather === option.value
-                  ? 'bg-indigo-100 dark:bg-indigo-900 ring-2 ring-indigo-500'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? ' dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  : ' dark:hover:bg-gray-700'
               }`}
             >
               <div className="text-xl sm:text-2xl mb-1">{option.emoji}</div>
@@ -232,8 +232,8 @@ const MoodForm = () => {
               )}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 physicalHealth.includes(symptom.id)
-                  ? 'bg-indigo-100 dark:bg-indigo-900 ring-2 ring-indigo-500'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  : 'dark:hover:bg-gray-700'
               }`}
             >
               <div className="text-xl sm:text-2xl mb-1">{symptom.icon}</div>
