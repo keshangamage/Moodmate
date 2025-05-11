@@ -61,7 +61,7 @@ const Home = () => {
                 </button>
               </Link>
               <Link to="/results">
-                <button className="text-white border-2 border-indigo-600 py-3 px-6 rounded-full hover:bg-indigo-50 transform transition-all duration-300">
+                <button className="text-white border-2 border-indigo-600 py-3 px-6 rounded-full  transform transition-all duration-300">
                   View Progress
                 </button>
               </Link>

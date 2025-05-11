@@ -106,7 +106,7 @@ body:not(.dark-mode) .navbar .mobile-menu {
 
 /*Body Styles */
 body {
-  background: rgb(195 224 253);
+  
   color: rgb(31, 41, 55);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   transition: background 0.3s, color 0.3s;
@@ -124,14 +124,14 @@ body.dark-mode .card,
 body.dark-mode form,
 body.dark-mode .bg-white {
   background-color: #2a3341 !important;
-  color: rgb(243, 244, 246);
+  
   
 }
 
 body.dark-mode input,
 body.dark-mode select {
   background-color: #374151;
-  color: rgb(243, 244, 246);
+  
   border-color: #4B5563;
 }
 
