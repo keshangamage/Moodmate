@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext';
-import HeroSection from '../components/HeroSection';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import HeroSection from "../components/HeroSection";
 
 const Home = () => {
-  const { user, login, loginWithEmail, signUp, loading, error: authError, isSignUp, toggleSignUp } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
+  const {
+    user,
+    login,
+    loginWithEmail,
+    signUp,
+    loading,
+    error: authError,
+    isSignUp,
+    toggleSignUp,
+  } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -20,12 +29,11 @@ const Home = () => {
         await loginWithEmail(email, password);
       }
     } catch (err) {
-      console.error('Auth error:', err);
+      console.error("Auth error:", err);
       setError(err.message);
     }
   };
 
-  
   const displayError = error || authError;
 
   return (
@@ -43,7 +51,8 @@ const Home = () => {
               Welcome back, {user.displayName}! 👋
             </h1>
             <p className="mb-6 text-gray-600 dark:text-gray-300">
-              Ready to track your mood today? Your mental well-being journey continues here.
+              Ready to track your mood today? Your mental well-being journey
+              continues here.
             </p>
             <div className="flex gap-4 justify-center">
               <Link to="/checkin">
@@ -60,17 +69,19 @@ const Home = () => {
           </>
         ) : (
           <>
-          
-            <h1 className="text-2xl font-bold mb-4">Start Your Wellness Journey</h1>
+            <h1 className="text-white text-2xl font-bold mb-4">
+              Start Your Wellness Journey
+            </h1>
             <p className="mb-6 text-gray-600 dark:text-gray-300">
-              Track your moods, discover patterns, and improve your mental well-being with MoodMate.
+              Track your moods, discover patterns, and improve your mental
+              well-being with MoodMate.
             </p>
             {displayError && (
               <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6 text-sm">
                 {displayError}
               </div>
             )}
- 
+
             <form onSubmit={handleSubmit} className="space-y-4 mb-6">
               {isSignUp && (
                 <div>
@@ -115,23 +126,20 @@ const Home = () => {
                 className="w-full bg-indigo-600 text-white py-3 px-8 rounded-full hover:bg-indigo-700 transform transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
-                {isSignUp ? 'Sign Up' : 'Sign In'}
+                {isSignUp ? "Sign Up" : "Sign In"}
               </button>
             </form>
 
-            <div className="relative mb-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-00"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or</span>
-              </div>
+            <div className="relative flex items-center justify-center text-sm mb-3">
+              <div className="flex-grow border-t border-gray-300" />
+              <span className="px-3 text-gray-500">Or</span>
+              <div className="flex-grow border-t border-gray-300" />
             </div>
 
             <button
               onClick={login}
               disabled={loading}
-              className="w-full bg-white text-gray-700 border border-gray-300 py-3 px-8 rounded-full hover:bg-gray-50 transform transition-all duration-300 flex items-center justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-5 w-full bg-white text-gray-700 border border-gray-300 py-3 px-8 rounded-full hover:bg-gray-50 transform transition-all duration-300 flex items-center justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <img
                 src="https://www.google.com/favicon.ico"
@@ -140,10 +148,9 @@ const Home = () => {
               />
               Continue with Google
             </button>
-           
 
             <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-              {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+              {isSignUp ? "Already have an account?" : "Don't have an account?"}
               <button
                 onClick={() => {
                   toggleSignUp();
@@ -151,14 +158,13 @@ const Home = () => {
                 }}
                 className="ml-1 text-indigo-600 hover:text-indigo-700"
               >
-                {isSignUp ? 'Sign In' : 'Sign Up'}
+                {isSignUp ? "Sign In" : "Sign Up"}
               </button>
             </p>
           </>
         )}
       </div>
     </div>
-    
   );
 };
 

@@ -28,7 +28,7 @@ const Footer = () => {
           <div className="text-center sm:text-left col-span-1 sm:col-span-2 md:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold mb-4">Resources</h3>
             <div className="space-y-2">
-              <a href="https://www.who.int/mental_health" 
+              <a href="https://www.who.int/health-topics/mental-health" 
                  target="_blank" 
                  rel="noopener noreferrer" 
                  className="block hover:text-indigo-200 transition-colors">

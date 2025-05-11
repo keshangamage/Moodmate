@@ -8,7 +8,7 @@ const HeatmapCalendar = ({ data }) => {
   }));
 
   return (
-    <div style={{ height: '200px' }}>
+    <div className='text-bluegray' style={{ height: '200px' }}>
       <ResponsiveCalendar
         data={calendarData}
         from={new Date(new Date().getFullYear(), 0, 1)}
