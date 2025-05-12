@@ -17,16 +17,16 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use(cors());
 app.use(express.json());
 
-// Configure nodemailer with Gmail SMTP or your preferred email service
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD // Changed from EMAIL_APP_PASSWORD to EMAIL_PASSWORD
+    pass: process.env.EMAIL_PASSWORD 
   }
 });
 
-// Test email configuration on startup
+
 transporter.verify((error, success) => {
   if (error) {
     console.error('Email service configuration error:', error);
@@ -99,7 +99,7 @@ app.post('/api/share-report', upload.single('report'), async (req, res) => {
   }
 });
 
-// Health check endpoint
+
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'ok',

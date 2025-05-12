@@ -1,12 +1,24 @@
-# React + Vite
+MoodMate
+Track Your Emotional Well-being
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MoodMate is a web application that enables users to monitor and analyze their emotional states. By regularly logging moods, users can visualize trends, identify patterns, and gain insights into their mental health over time.
 
-Currently, two official plugins are available:
+Features
+Mood Logging: Easily record your daily emotional state.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Data Visualization: View mood trends through interactive charts.
 
-## Expanding the ESLint configuration
+Insights & Patterns: Identify emotional patterns and triggers.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+User-Friendly Interface: Simple and intuitive design for easy navigation.
+
+Technologies Used
+HTML5
+
+CSS3
+
+JavaScript
+
+React
+
+Tailwindcss
