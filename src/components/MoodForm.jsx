@@ -76,7 +76,7 @@ const MoodForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 sm:p-9 dark:bg-gray-800 rounded-3xl shadow-xl w-full max-w-md mx-auto mt-4 sm:mt-5 transform transition-all duration-300 hover:shadow-2xl"
+      className="p-4 sm:p-9 bg-bluegray rounded-3xl shadow-xl w-full max-w-md mx-auto mt-4 sm:mt-5 transform transition-all duration-300 hover:shadow-2xl bg-bluegray"
     >
       <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent dark:from-indigo-400 ">
         How are you feeling today?
@@ -84,8 +84,8 @@ const MoodForm = () => {
 
       {/* Mood Selection */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">Select your mood</label>
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-4">
+        <label className="text-gray-200 block mb-3 font-medium text-base sm:text-lg">Select your mood</label>
+        <div className="text-white grid grid-cols-3 sm:grid-cols-5 gap-2 mb-4">
           {[
             { value: 'happy', emoji: '😊', label: 'Happy' },
             { value: 'sad', emoji: '😢', label: 'Sad' },
@@ -99,7 +99,7 @@ const MoodForm = () => {
               onClick={() => setMood(option.value)}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 mood === option.value
-                  ? 'dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  ? 'bg-indigo-900 ring-2 ring-indigo-500'
                   : 'dark:hover:bg-gray-700'
               }`}
             >
@@ -112,7 +112,7 @@ const MoodForm = () => {
 
       {/* Sleep Hours */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           Hours of Sleep Last Night
         </label>
         <div className="relative">
@@ -122,7 +122,7 @@ const MoodForm = () => {
             max="24"
             value={sleepHours}
             onChange={(e) => setSleepHours(Number(e.target.value))}
-            className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            className="w-full p-3 border-2 border-gray-600 dark:border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors dark:bg-gray-700 text-gray-200 dark:text-gray-100"
             placeholder="Enter hours..."
           />
           <div className="absolute right-3 top-3 text-gray-400 dark:text-gray-500">hrs</div>
@@ -131,10 +131,10 @@ const MoodForm = () => {
 
       {/* Activities */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           What activities did you do today?
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="text-white grid grid-cols-2 sm:grid-cols-4 gap-2">
           {ACTIVITIES.map((activity) => (
             <button
               key={activity.id}
@@ -142,7 +142,7 @@ const MoodForm = () => {
               onClick={() => handleActivityToggle(activity.id)}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 activities.includes(activity.id)
-                  ? ' dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  ? 'bg-indigo-900 ring-2 ring-indigo-500'
                   : ' dark:hover:bg-gray-700'
               }`}
             >
@@ -155,7 +155,7 @@ const MoodForm = () => {
 
       {/* Stress Level */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           Stress Level
         </label>
         <input
@@ -164,7 +164,7 @@ const MoodForm = () => {
           max="10"
           value={stressLevel}
           onChange={(e) => setStressLevel(Number(e.target.value))}
-          className="w-full h-2 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
+          className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
         />
         <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
           <span>Low Stress</span>
@@ -174,7 +174,7 @@ const MoodForm = () => {
 
       {/* Energy Level */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           Energy Level
         </label>
         <input
@@ -183,7 +183,7 @@ const MoodForm = () => {
           max="10"
           value={energyLevel}
           onChange={(e) => setEnergyLevel(Number(e.target.value))}
-          className="w-full h-2  dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
+          className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
         />
         <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
           <span>Low Energy</span>
@@ -193,10 +193,10 @@ const MoodForm = () => {
 
       {/* Weather */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           Weather Today
         </label>
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+        <div className="text-white grid grid-cols-3 sm:grid-cols-5 gap-2">
           {WEATHER_OPTIONS.map((option) => (
             <button
               key={option.value}
@@ -204,7 +204,7 @@ const MoodForm = () => {
               onClick={() => setWeather(option.value)}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 weather === option.value
-                  ? ' dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  ? 'bg-indigo-900 ring-2 ring-indigo-500'
                   : ' dark:hover:bg-gray-700'
               }`}
             >
@@ -217,10 +217,10 @@ const MoodForm = () => {
 
       {/* Physical Health */}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           Physical Health
         </label>
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+        <div className="text-gray-200 grid grid-cols-3 sm:grid-cols-5 gap-2">
           {PHYSICAL_SYMPTOMS.map((symptom) => (
             <button
               key={symptom.id}
@@ -232,7 +232,7 @@ const MoodForm = () => {
               )}
               className={`p-2 sm:p-3 rounded-xl transition-all ${
                 physicalHealth.includes(symptom.id)
-                  ? 'dark:bg-indigo-900 ring-2 ring-indigo-500'
+                  ? 'bg-indigo-900 ring-2 ring-indigo-500'
                   : 'dark:hover:bg-gray-700'
               }`}
             >
@@ -245,13 +245,13 @@ const MoodForm = () => {
 
       {/* Notes*/}
       <div className="mb-6 sm:mb-8">
-        <label className="block mb-3 font-medium text-gray-700 dark:text-gray-200 text-base sm:text-lg">
+        <label className="block mb-3 font-medium text-gray-200 text-base sm:text-lg">
           Notes (Optional)
         </label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+          className="w-full p-3 border-2 border-gray-600 rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors dark:bg-gray-700 text-gray-200 dark:text-gray-100"
           placeholder="Add any thoughts or reflections..."
           rows="3"
         />

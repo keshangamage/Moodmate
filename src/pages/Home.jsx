@@ -50,7 +50,7 @@ const Home = () => {
             <h1 className="text-2xl font-bold mb-4 text-white">
               Welcome back, {user.displayName}! 👋
             </h1>
-            <p className="mb-6 text-gray-600 dark:text-gray-300">
+            <p className="mb-6 text-gray-300">
               Ready to track your mood today? Your mental well-being journey
               continues here.
             </p>
@@ -139,7 +139,7 @@ const Home = () => {
             <button
               onClick={login}
               disabled={loading}
-              className="mt-5 w-full bg-white text-gray-700 border border-gray-300 py-3 px-8 rounded-full hover:bg-gray-50 transform transition-all duration-300 flex items-center justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-5 w-full text-gray-200 border border-gray-300 py-3 px-8 rounded-full hover:bg-gray-700 transform transition-all duration-300 flex items-center justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <img
                 src="https://www.google.com/favicon.ico"

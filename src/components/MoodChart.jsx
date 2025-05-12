@@ -224,7 +224,7 @@ const MoodChart = ({ data }) => {
           font: {
             size: window.innerWidth < 640 ? 10 : 12
           },
-          color: document.body.classList.contains('dark-mode') ? '#fff' : '#1f2937'
+          color: document.body.classList.contains('dark-mode') ? '#fff' : '#fff',
         }
       },
       tooltip: {
@@ -292,13 +292,13 @@ const MoodChart = ({ data }) => {
   };
 
   const renderStatCard = (title, value, icon, trend = null) => (
-    <div className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm">
+    <div className="bg-gray-800 rounded-xl p-3 shadow-sm">
       <div className="flex items-center justify-between">
-        <span className="text-gray-500 dark:text-gray-400 text-sm">{title}</span>
+        <span className="text-gray-400 text-sm">{title}</span>
         {icon}
       </div>
       <div className="mt-2 flex items-baseline">
-        <span className="text-xl font-semibold text-gray-900 dark:text-white">{value}</span>
+        <span className="text-xl font-semibold text-white">{value}</span>
         {trend !== null && (
           <span className={`ml-2 text-sm ${trend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
             {trend >= 0 ? '↑' : '↓'} {Math.abs(trend).toFixed(1)}
@@ -311,7 +311,7 @@ const MoodChart = ({ data }) => {
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-700">Mood & Stress Trends</h3>
+        <h3 className="text-base sm:text-lg font-semibold text-gray-500">Mood & Stress Trends</h3>
         <div className="flex space-x-2">
           <button
             onClick={() => setTimeRange('week')}
@@ -420,13 +420,13 @@ const MoodChart = ({ data }) => {
       )}
 
       {weatherImpact.length > 0 && (
-        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
+        <div className="pt-4 border-t border-gray-700">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-200 mb-3">
             Weather Impact on Mood
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {weatherImpact.map(({ weather, average, count }) => (
-              <div key={weather} className="text-white bg-gray-50 dark:bg-gray-700 p-3 rounded-xl">
+              <div key={weather} className="text-white bg-gray-700 p-3 rounded-xl">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-2xl">
                     {weather === 'sunny' ? '☀️' :
@@ -451,10 +451,10 @@ const MoodChart = ({ data }) => {
 
       {activityImpact.length > 0 && (
         <div className="pt-2">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Activity Impact on Mood</h3>
+          <h3 className="text-base sm:text-lg font-semibold text-gray-200 mb-3">Activity Impact on Mood</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {activityImpact.map(({ activity, average, count }) => (
-              <div key={activity} className="text-white bg-gray-50 dark:bg-gray-700 p-3 rounded-xl flex items-center space-x-3">
+              <div key={activity} className="text-white bg-gray-700 p-3 rounded-xl flex items-center space-x-3">
                 <div className="text-xl sm:text-2xl">
                   {activity === 'exercise' ? '🏃‍♂️' :
                    activity === 'meditation' ? '🧘‍♂️' :

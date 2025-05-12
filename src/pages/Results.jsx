@@ -106,27 +106,27 @@ const Results = () => {
     <div className="mt-3 min-h-screen p-3 sm:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Today's Mood Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
+        <div className="bg-bluegray rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
           <div className="text-center space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">Today's Check-In</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-200 ">Today's Check-In</h2>
 
             <div className="flex flex-col sm:flex-row items-center justify-center sm:space-x-6 space-y-4 sm:space-y-0">
               <div className={`text-6xl sm:text-7xl animated-emoji ${latest.mood ? '' : 'opacity-50'}`}>
                 {moodEmojis[latest.mood] || '😴'}
               </div>
               <div className="text-center sm:text-left space-y-2">
-                <div className="text-xl sm:text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <div className="text-xl sm:text-2xl font-semibold text-gray-300 ">
                   Mood Score: {latest.moodScore}/10
                 </div>
-                <div className="text-base sm:text-lg text-gray-600 dark:text-gray-300 flex items-center justify-center sm:justify-start">
+                <div className="text-base sm:text-lg text-gray-300 flex items-center justify-center sm:justify-start">
                   <span className="mr-2">⚡</span>
                   Energy: {latest.energyLevel}/10
                 </div>
-                <div className="text-base sm:text-lg text-gray-600 dark:text-gray-300 flex items-center justify-center sm:justify-start">
+                <div className="text-base sm:text-lg text-gray-300 flex items-center justify-center sm:justify-start">
                   <span className="mr-2">😴</span>
                   Sleep: {latest.sleepHours} hours
                 </div>
-                <div className="text-base sm:text-lg text-gray-600 dark:text-gray-300 flex items-center justify-center sm:justify-start">
+                <div className="text-base sm:text-lg text-gray-300 flex items-center justify-center sm:justify-start">
                   <span className="mr-2">📊</span>
                   Stress: {latest.stressLevel}/10
                 </div>
@@ -136,8 +136,8 @@ const Results = () => {
             {/* Weather */}
             {latest.weather && (
               <div className="mt-4">
-                <h3 className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">Weather</h3>
-                <div className="inline-flex items-center bg-indigo-50 dark:bg-indigo-900/50 px-4 py-2 rounded-full">
+                <h3 className="text-lg font-semibold mb-2 text-gray-200">Weather</h3>
+                <div className="inline-flex items-center bg-indigo-900/50 px-4 py-2 rounded-full text-indigo-200">
                   <span className="text-2xl mr-2">{weatherEmojis[latest.weather]}</span>
                   <span className="capitalize">{latest.weather}</span>
                 </div>
@@ -147,12 +147,12 @@ const Results = () => {
             {/* Physical Health */}
             {latest.physicalHealth && latest.physicalHealth.length > 0 && (
               <div className="mt-4">
-                <h3 className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">Physical Health</h3>
+                <h3 className="text-lg font-semibold mb-2 text-gray-200">Physical Health</h3>
                 <div className="flex flex-wrap justify-center gap-2">
                   {latest.physicalHealth.map((health) => (
                     <div
                       key={health}
-                      className="bg-indigo-50 dark:bg-indigo-900/50 px-3 py-2 rounded-full flex items-center"
+                      className="bg-indigo-900/50 text-indigo-200 px-3 py-2 rounded-full flex items-center"
                     >
                       <span className="text-xl mr-2">{healthEmojis[health]}</span>
                       <span className="capitalize">{health}</span>
@@ -165,12 +165,12 @@ const Results = () => {
             {/* Activities */}
             {latest.activities && latest.activities.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">Today's Activities</h3>
+                <h3 className="text-lg font-semibold mb-3 text-gray-200">Today's Activities</h3>
                 <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                   {latest.activities.map((activity) => (
                     <div
                       key={activity}
-                      className="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-200 
+                      className="bg-indigo-900/50 text-indigo-200 
                         px-3 sm:px-4 py-2 rounded-full flex items-center text-sm sm:text-base"
                     >
                       <span className="mr-2">{activityEmojis[activity]}</span>
@@ -184,8 +184,8 @@ const Results = () => {
             {/* Notes */}
             {latest.notes && (
               <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">Notes</h3>
-                <div className="bg-indigo-50 dark:bg-indigo-900/50 p-4 rounded-xl text-gray-700 dark:text-gray-200">
+                <h3 className="text-lg font-semibold mb-2 text-gray-200">Notes</h3>
+                <div className="bg-indigo-900/50 p-4 rounded-xl text-gray-200">
                   {latest.notes}
                 </div>
               </div>
@@ -195,8 +195,8 @@ const Results = () => {
 
         {/* Insights */}
         {insights.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4 sm:mb-6">Your Insights</h2>
+          <div className="bg-bluegray rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Your Insights</h2>
             <div className="grid gap-3 sm:gap-4">
               {insights.map((insight, index) => (
                 <div
@@ -307,28 +307,28 @@ const Results = () => {
         {/* Mood Chart*/}
         <div 
           ref={chartRef}
-          className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6"
+          className="bg-bluegray rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6"
           style={{
-            backgroundColor: document.body.classList.contains('dark-mode') ? 'rgb(31, 41, 55)' : 'rgb(31, 41, 55), 255)',
+            
             willChange: 'transform',
             transform: 'translateZ(0)'
           }}
         >
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4">Your Mood Journey</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Your Mood Journey</h2>
           <MoodChart data={moodData} />
         </div>
 
         {/* Heatmap Calendar */}
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4">Mood Heatmap</h2>
+        <div className="bg-bluegray rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Mood Heatmap</h2>
           <HeatmapCalendar data={moodData} />
         </div>
         
 
         {/* Advanced Insights */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4">Advanced Insights</h2>
+        <div className="bg-bluegray rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Advanced Insights</h2>
           <div className="grid gap-4">
             {advancedInsights.map((insight, index) => (
               <div
