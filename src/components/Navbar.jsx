@@ -10,19 +10,20 @@ const Navbar = () => {
     return saved !== null ? JSON.parse(saved) : true;
   });
   const menuRef = useRef(null);
-
   const location = useLocation();
 
+  // Apply dark mode and save it in localStorage
   useEffect(() => {
     document.body.classList.toggle('dark-mode', darkMode);
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
+ 
   useEffect(() => {
-    
     setIsMenuOpen(false);
   }, [location]);
 
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -34,39 +35,25 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  useEffect(() => {
   
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
   }, [isMenuOpen]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  const isActiveRoute = (path) => {
-    return location.pathname === path;
-  };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+  const isActiveRoute = (path) => location.pathname === path;
 
   const handleMobileAction = (action) => {
     setIsMenuOpen(false);
-    if (typeof action === 'function') {
-      action();
-    }
+    if (typeof action === 'function') action();
   };
 
   const navLinkClass = (path) => `
     relative px-4 py-2 rounded-full transition-all duration-300
-    ${isActiveRoute(path) 
-      ? darkMode ? 'text-white bg-white bg-opacity-20' : 'text-white bg-bluegray' 
-      : darkMode ? 'text-white hover:bg-bluegray hover:bg-opacity-10' : 'text-white hover:bg-bluegray'}
+    ${isActiveRoute(path) ? (darkMode ? 'text-white bg-white bg-opacity-20' : 'text-white bg-bluegray') : (darkMode ? 'text-white hover:bg-bluegray hover:bg-opacity-10' : 'text-white hover:bg-bluegray')}
   `;
 
   return (
@@ -78,7 +65,7 @@ const Navbar = () => {
         </Link>
         
         {/* Hamburger Menu Button */}
-        <button 
+        <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`md:hidden p-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
           aria-label="Toggle menu"
@@ -102,88 +89,44 @@ const Navbar = () => {
             </>
           )}
           
-          <button 
+          <button
             onClick={user ? logout : login}
-            className={`px-4 py-2 rounded-full transition-all duration-300 ${
-              darkMode 
-                ? 'bg-white bg-opacity-10 text-white hover:bg-opacity-20' 
-                : 'bg-bluegray text-white'
-            }`}
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${darkMode ? 'bg-white bg-opacity-10 text-white hover:bg-opacity-20' : 'bg-bluegray text-white'}`}
           >
             {user ? 'Sign Out' : 'Sign In'}
           </button>
-          
-          <button 
+
+          <button
             onClick={toggleDarkMode}
             className={`ml-4 p-2 rounded-full hover:bg-bluegray hover:bg-opacity-10 transition-all duration-300 ${darkMode ? 'text-white' : 'text-indigo-700'}`}
             aria-label="Toggle dark mode"
           >
-            {darkMode ? (
-              <span className="text-xl" role="img" aria-label="Light mode">🌞</span>
-            ) : (
-              <span className="text-xl" role="img" aria-label="Dark mode">🌙</span>
-            )}
+            {darkMode ? <span className="text-xl" role="img" aria-label="Light mode">🌞</span> : <span className="text-xl" role="img" aria-label="Dark mode">🌙</span>}
           </button>
         </div>
 
         {/* Mobile Navigation */}
-        <div 
-          className={`mobile-menu fixed sm:absolute top-[var(--navbar-height)] inset-x-0 max-h-[calc(100vh-var(--navbar-height))] overflow-y-auto shadow-lg rounded-b-lg p-4 md:hidden space-y-2 z-50 transform transition-all duration-300 backdrop-blur-md ${
-            isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
-          }`}
+        <div
+          className={`mobile-menu fixed sm:absolute top-[var(--navbar-height)] inset-x-0 max-h-[calc(100vh-var(--navbar-height))] overflow-y-auto shadow-lg rounded-b-lg p-4 md:hidden space-y-2 z-50 transform transition-all duration-300 backdrop-blur-md ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
           style={{ '--navbar-height': '64px' }}
         >
-          <Link 
-            to="/" 
-            onClick={() => handleMobileAction()}
-            className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${
-              darkMode ? 'text-white' : 'text-white'
-            } ${isActiveRoute('/') ? 'active' : ''}`}
-          >
-            Home
-          </Link>
+          <Link to="/" onClick={() => handleMobileAction()} className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'} ${isActiveRoute('/') ? 'active' : ''}`}>Home</Link>
           {user && (
             <>
-              <Link 
-                to="/checkin" 
-                onClick={() => handleMobileAction()}
-                className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${
-                  darkMode ? 'text-white' : 'text-white'
-                } ${isActiveRoute('/checkin') ? 'active' : ''}`}
-              >
-                Check-In
-              </Link>
-              <Link 
-                to="/results" 
-                onClick={() => handleMobileAction()}
-                className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${
-                  darkMode ? 'text-white' : 'text-white'
-                } ${isActiveRoute('/results') ? 'active' : ''}`}
-              >
-                Results
-              </Link>
+              <Link to="/checkin" onClick={() => handleMobileAction()} className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'} ${isActiveRoute('/checkin') ? 'active' : ''}`}>Check-In</Link>
+              <Link to="/results" onClick={() => handleMobileAction()} className={`block px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'} ${isActiveRoute('/results') ? 'active' : ''}`}>Results</Link>
             </>
           )}
-          <button 
-            onClick={() => handleMobileAction(user ? logout : login)}
-            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'}`}
-          >
-            {user ? 'Sign Out' : 'Sign In'}
-          </button>
-          <button 
-            onClick={() => handleMobileAction(toggleDarkMode)}
-            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'}`}
-          >
+          <button onClick={() => handleMobileAction(user ? logout : login)} className={`w-full text-left px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'}`}>{user ? 'Sign Out' : 'Sign In'}</button>
+          <button onClick={() => handleMobileAction(toggleDarkMode)} className={`w-full text-left px-4 py-2 rounded-lg hover:bg-bluegray hover:bg-opacity-10 ${darkMode ? 'text-white' : 'text-white'}`}>
             {darkMode ? '🌞 Light Mode' : '🌙 Dark Mode'}
           </button>
         </div>
       </nav>
+
       
-      
-      <div 
-        className={`fixed inset-0 bg-black transition-opacity duration-300 md:hidden ${
-          isMenuOpen ? 'opacity-30 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+      <div
+        className={`fixed inset-0 bg-black transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-30 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsMenuOpen(false)}
       />
     </>

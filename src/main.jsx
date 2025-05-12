@@ -10,7 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 const initializeApp = () => {
   createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-      <BrowserRouter basename="/Moodmate"> {/* ✅ FIXED LINE */}
+      <BrowserRouter basename="/Moodmate">
         <MoodProvider>
           <App />
         </MoodProvider>

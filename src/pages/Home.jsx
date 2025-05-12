@@ -14,6 +14,7 @@ const Home = () => {
     isSignUp,
     toggleSignUp,
   } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -37,9 +38,10 @@ const Home = () => {
   const displayError = error || authError;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center mb-10 ">
+    <div className="min-h-screen flex flex-col items-center justify-center mb-10">
       <HeroSection />
-      <div className="card max-w-lg mt-4 ml-3 mr-3">
+
+      <div className="card max-w-lg mt-4 mx-3">
         {loading ? (
           <div className="text-center p-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
@@ -54,14 +56,14 @@ const Home = () => {
               Ready to track your mood today? Your mental well-being journey
               continues here.
             </p>
-            <div className="flex gap-4 justify-center">
-              <Link to="/checkin">
-                <button className="bg-indigo-600 text-white py-3 px-6 rounded-full hover:bg-indigo-700 transform transition-all duration-300">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-stretch">
+              <Link to="/checkin" className="w-full sm:w-auto">
+                <button className="w-full bg-indigo-600 text-white py-3 px-6 rounded-full hover:bg-indigo-700 transition-all duration-300">
                   Daily Check-In
                 </button>
               </Link>
-              <Link to="/results">
-                <button className="text-white border-2 border-indigo-600 py-3 px-6 rounded-full  transform transition-all duration-300">
+              <Link to="/results" className="w-full sm:w-auto">
+                <button className="w-full text-white border-2 border-indigo-600 py-3 px-6 rounded-full transition-all duration-300">
                   View Progress
                 </button>
               </Link>
@@ -76,6 +78,7 @@ const Home = () => {
               Track your moods, discover patterns, and improve your mental
               well-being with MoodMate.
             </p>
+
             {displayError && (
               <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6 text-sm">
                 {displayError}
@@ -97,6 +100,7 @@ const Home = () => {
                   />
                 </div>
               )}
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Email
@@ -109,6 +113,7 @@ const Home = () => {
                   required
                 />
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Password
@@ -121,9 +126,10 @@ const Home = () => {
                   required
                 />
               </div>
+
               <button
                 type="submit"
-                className="w-full bg-indigo-600 text-white py-3 px-8 rounded-full hover:bg-indigo-700 transform transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-indigo-600 text-white py-3 px-8 rounded-full hover:bg-indigo-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 {isSignUp ? "Sign Up" : "Sign In"}
@@ -139,7 +145,7 @@ const Home = () => {
             <button
               onClick={login}
               disabled={loading}
-              className="mt-5 w-full text-gray-200 border border-gray-300 py-3 px-8 rounded-full hover:bg-gray-700 transform transition-all duration-300 flex items-center justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-5 w-full text-gray-200 border border-gray-300 py-3 px-8 rounded-full hover:bg-gray-700 transition-all duration-300 flex items-center justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <img
                 src="https://www.google.com/favicon.ico"
