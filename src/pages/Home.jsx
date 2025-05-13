@@ -45,7 +45,7 @@ const Home = () => {
         {loading ? (
           <div className="text-center p-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-            <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+            <p className="text-gray-300">Loading...</p>
           </div>
         ) : user ? (
           <>
@@ -74,7 +74,7 @@ const Home = () => {
             <h1 className="text-white text-2xl font-bold mb-4">
               Start Your Wellness Journey
             </h1>
-            <p className="mb-6 text-gray-600 dark:text-gray-300">
+            <p className="mb-6 text-gray-300">
               Track your moods, discover patterns, and improve your mental
               well-being with MoodMate.
             </p>
@@ -102,27 +102,27 @@ const Home = () => {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Email
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Password
                 </label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -155,7 +155,7 @@ const Home = () => {
               Continue with Google
             </button>
 
-            <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-center text-sm text-gray-400">
               {isSignUp ? "Already have an account?" : "Don't have an account?"}
               <button
                 onClick={() => {
