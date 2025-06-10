@@ -91,10 +91,6 @@ Please ensure your code follows project coding standards and includes appropriat
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
-
-- Thanks to all contributors who have helped shape Moodmate
-- Special thanks to our beta testers for their valuable feedback
 
 ---
 
